@@ -1,7 +1,7 @@
 #[allow(unused)]
 
 use std::io;
-use std::io::{Write};
+use std::io::Write;
 use rand::Rng;
 
 fn main() {
@@ -24,6 +24,12 @@ fn main() {
         io::stdin()
             .read_line(&mut hex_input)
             .expect("Invalid input!");
+
+        let decoded_bin_input: i32 = i32::from_str_radix(&bin_input.trim(), 2).expect("Not a binary number!");
+        println!("{:?}", decoded_bin_input);
+
+        let decoded_hex_input = hex::decode(&hex_input.trim());
+        println!("{:?}", decoded_hex_input.unwrap()[0]);
 
         println!();
     }
