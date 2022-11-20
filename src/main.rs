@@ -5,12 +5,12 @@ use std::io::Write;
 use rand::Rng;
 
 fn main() {
-    let mut bin_input: String = String::new();
-    let mut hex_input: String = String::new();
     let mut rng = rand::thread_rng();
 
     loop {
-        let random_num = rng.gen_range(1..=255);
+        let random_num: i32 = rng.gen_range(1..=255);
+        let mut bin_input: String = String::new();
+        let mut hex_input: String = String::new();
 
         println!("DEC: {}", random_num);
         print!("BIN: ");
@@ -26,10 +26,20 @@ fn main() {
             .expect("Invalid input!");
 
         let decoded_bin_input: i32 = i32::from_str_radix(&bin_input.trim(), 2).expect("Not a binary number!");
-        println!("{:?}", decoded_bin_input);
-
         let decoded_hex_input = hex::decode(&hex_input.trim());
-        println!("{:?}", decoded_hex_input.unwrap()[0]);
+
+        println!();
+        if decoded_bin_input == random_num {
+            println!("BIN: Correct!");
+        } else {
+            println!("BIN: Incorrect! ({})", format!("{:08b}", random_num));
+        }
+
+        if decoded_hex_input.as_ref().unwrap()[0] == random_num as u8 {
+            println!("HEX: Correct!");
+        } else {
+            println!("HEX: Incorrect! ({})", format!("{:X}", random_num));
+        }
 
         println!();
     }
